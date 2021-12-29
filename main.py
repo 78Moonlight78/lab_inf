@@ -73,27 +73,33 @@ def code():
         screen.blit(stat_txt_surf, stat_text_rect)
         screen.blit(text_code_surf, text_code_rect)
         if button("Г О Т О В O", int(screen_width / 2 - 100),  int(screen_height / 1.2), 50, 50, click) :
-            decod1 = ''
-            decod2 = ''
-            word1 = list(word)
-            word2 =""
-            for i in range(len(word1)):
-                word1[i] = ALPHABET.get(word1[i].lower())
-                word2 += str(word1[i])
-                if i < 2:
-                    decod1 += str(word1[i])
-                else:
-                    decod2 += str(word1[i])
-            decod1, decod2 = coding(decod1), coding(decod2)
-            word_decode = str(decoding(decod1))+str(decoding(decod2))
-            word1 = decod1 + decod2
-            if word1 == text and word2 == word_decode:
-                screen.fill(WHITE)
-                change_acting_level(str(int(get_acting_level()) + 1))
-                if not Game().run():
-                    main_menu()
-            else:
-                false_word = 1
+           try:
+               decod1 = ''
+               decod2 = ''
+               word1 = list(word)
+               word2 = ""
+               for i in range(len(word1)):
+                   word1[i] = ALPHABET.get(word1[i].lower())
+                   word2 += str(word1[i])
+                   if i < 2:
+                       decod1 += str(word1[i])
+                   else:
+                       decod2 += str(word1[i])
+               decod1, decod2 = coding(decod1), coding(decod2)
+               word_decode = str(decoding(decod1)) + str(decoding(decod2))
+               word1 = decod1 + decod2
+               if word1 == text and word2 == word_decode:
+                   screen.fill(WHITE)
+                   change_acting_level(str(int(get_acting_level()) + 1))
+                   if not Game().run():
+                       main_menu()
+               else:
+                   false_word = 1
+           except pg.error as message:
+                print("ERROR coding wrong")
+                raise SystemExit(message)
+
+
         if button("И Н С Т Р У К Ц И Я", int(screen_width / 2 -25), int(screen_height / 1.2), 75, 50, click):
             view_instruct_of_code()
 
